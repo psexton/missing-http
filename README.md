@@ -27,3 +27,7 @@ Except MATLAB uses HttpComponents internally, so it's already on the classpath. 
 Thankfully, the Java world also produced a tool called [Jar Jar Links](https://code.google.com/p/jarjar/) that lets you mess with jar files. One thing you can do is rename things. So if we move all of the HttpComponents classes to a new package, there's no longer any overlap, and we can use our newer versions with no worry of accidentally getting an older version packaged with MATLAB.
 
 That's exactly what missing-http does. All occurances of `org.apache.*` are altered to `net.psexton.ext.org.apache.*` in the HttpComponents jar file bytecode. Additionally, we combine the half a dozen jars from Apache into a single `missing-http.jar` file.
+
+# License
+
+HttpComponents is licensed under the [Apache 2 license](http://opensource.org/licenses/Apache-2.0). missing-http is a derivative work and is licensed under the same terms. Copyright for all code inside the `missing-http.jar` with a classpath of `net.psexton.ext.*` remains with its original owners (e.g. The Apache Foundation).
