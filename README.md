@@ -31,3 +31,11 @@ That's exactly what missing-http does. All occurances of `org.apache.*` are alte
 # License
 
 HttpComponents is licensed under the [Apache 2 license](http://opensource.org/licenses/Apache-2.0). missing-http is a derivative work and is licensed under the same terms. Copyright for all code inside the `missing-http.jar` with a classpath of `net.psexton.ext.*` remains with its original owners (e.g. The Apache Foundation).
+
+# Contributing
+
+1. Fork it ( https://github.com/psexton/missing-http/fork )
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create a new Pull Request 
