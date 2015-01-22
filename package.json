@@ -1,0 +1,32 @@
+{
+    "name": "missing-http",
+    "version": "0.1.0",
+    "description": "Proper HTTP APIs for MATLAB",
+    "keywords": [
+        "http"
+    ],
+    "contributors": [
+        {
+            "name": "Paul Sexton",
+            "email": "psexton@gnresound.com"
+        }
+    ],
+    "bugs": {
+        "url": "https://github.com/psexton/missing-http/issues/new"
+    },
+    "licenses": [
+        {
+            "type": "Apache-2.0",
+            "url": "http://opensource.org/licenses/Apache-2.0"
+        }
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/psexton/missing-http.git"
+    },
+    "matlab": "2013b",
+    "scripts": {
+        "load": "onLoad.m",
+        "unload": "onUnload.m"
+    }
+}
