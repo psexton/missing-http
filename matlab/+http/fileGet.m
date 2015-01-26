@@ -1,5 +1,5 @@
 function statusCode = fileGet( url, filePath, varargin )
-%JSONGET Makes a GET request, asking for a binary response
+%HTTP.JSONGET Makes a GET request, asking for a binary response
 %   URL resource to make the request to
 %   FILEPATH path to write the response body to
 %   VARARGIN extra headers to add to the request

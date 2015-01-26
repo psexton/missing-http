@@ -1,5 +1,5 @@
 function [ statusCode, responseBody ] = filePut( url, filePath, varargin )
-%FILEPUT Makes a PUT request, with a file request body, and asking for a JSON response
+%HTTP.FILEPUT Makes a PUT request, with a file request body, and asking for a JSON response
 %   URL resource to make the request to
 %   FILEPATH path to file to use as request body
 %   VARARGIN extra headers to add to the request

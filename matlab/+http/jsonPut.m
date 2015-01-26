@@ -1,5 +1,5 @@
 function [ statusCode, responseBody ] = jsonPut( url, requestBody, varargin )
-%JSONPUT Makes a PUT request, with a JSON request body, and asking for a JSON response
+%HTTP.JSONPUT Makes a PUT request, with a JSON request body, and asking for a JSON response
 %   URL resource to make the request to
 %   REQUESTBODY string to use as request body
 %   VARARGIN extra headers to add to the request

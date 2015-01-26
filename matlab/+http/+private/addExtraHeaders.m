@@ -1,5 +1,5 @@
 function addExtraHeaders( request, headers )
-%ADDEXTRAHEADERS Adds extra headers into the request
+%HTTP.PRIVATE.ADDEXTRAHEADERS Adds extra headers into the request
 %   REQUEST is an HttpComponents Request object
 %   HEADERS is a cell array of strings
 %   

@@ -1,5 +1,5 @@
 function [ statusCode, responseBody ] = jsonGet( url, varargin )
-%JSONGET Makes a GET request, asking for a JSON response
+%HTTP.JSONGET Makes a GET request, asking for a JSON response
 %   URL resource to make the request to
 %   VARARGIN extra headers to add to the request
 %   STATUSCODE Integer response code

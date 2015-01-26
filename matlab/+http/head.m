@@ -1,5 +1,5 @@
 function statusCode = head( url, varargin )
-%HEAD Makes a HEAD request, asking for a JSON response
+%HTTP.HEAD Makes a HEAD request, asking for a JSON response
 %   URL resource to make the request to
 %   VARARGIN extra headers to add to the request
 %   STATUSCODE Integer response code

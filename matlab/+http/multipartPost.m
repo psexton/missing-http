@@ -1,5 +1,5 @@
 function [ statusCode, responseBody ] = multipartPost( url, requestParts, varargin )
-%MULTIPARTPOST Makes a POST request with a multipart/form-data request body, and asking for a JSON response 
+%HTTP.MULTIPARTPOST Makes a POST request with a multipart/form-data request body, and asking for a JSON response 
 %   The request body has two parts: a JSON part 
 %   (Content-Type: application/json) and a file part (Content-Type:
 %   application/octet-stream).
