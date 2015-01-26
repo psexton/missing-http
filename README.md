@@ -28,6 +28,10 @@ Thankfully, the Java world also produced a tool called [Jar Jar Links](https://c
 
 That's exactly what missing-http does. All occurances of `org.apache.*` are altered to `net.psexton.ext.org.apache.*` in the HttpComponents jar file bytecode. Additionally, we combine the half a dozen jars from Apache into a single `missing-http.jar` file.
 
+# Installation
+
+Run the `onLoad` function when MATLAB starts. e.g. `run('path/to/missing-http/onLoad.m');`
+
 # License
 
 HttpComponents is licensed under the [Apache 2 license](http://opensource.org/licenses/Apache-2.0). missing-http is a derivative work and is licensed under the same terms. Copyright for all code inside the `missing-http.jar` with a classpath of `net.psexton.ext.*` remains with its original owners (e.g. The Apache Foundation).
