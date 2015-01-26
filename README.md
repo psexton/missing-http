@@ -61,7 +61,7 @@ requestParts(1).Body = 'http is not that complicated';
 requestParts(2).Type = 'file';
 requestParts(2).Name = 'upload';
 requestParts(2).Body = '/home/jrandom/example.mp3';
-[statusCode, responseBody] = http.multipartPost(https://example.com, requestParts);
+[statusCode, responseBody] = http.multipartPost('https://example.com', requestParts);
 ```
 
 # License
