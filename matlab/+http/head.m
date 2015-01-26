@@ -16,13 +16,12 @@ if(nargin > 1)
 end
 
 % Execute the request
-httpClient = net.psexton.ext.org.apache.http.impl.client.HttpClientBuilder.create().build();
-localContext = net.psexton.ext.org.apache.http.protocol.BasicHttpContext();
-response = httpClient.execute(request, localContext);
+[client, response] = http.private.executeRequest(request);
 
 % Parse the response
 statusCode = response.getStatusLine.getStatusCode;
 
 % Clean up
-httpClient.getConnectionManager().shutdown();
+http.private.cleanup(client, response);
+
 end
