@@ -32,6 +32,38 @@ That's exactly what missing-http does. All occurances of `org.apache.*` are alte
 
 Run the `onLoad` function when MATLAB starts. e.g. `run('path/to/missing-http/onLoad.m');`
 
+# Usage
+
+missing-http has the opinion that most of the time, you probably want to either deal with JSON or a file. It provides wrapper functions for these common tasks. For less common tasks, you can roll your own wrapper.
+
+Provided wrappers:
+ * GET request, JSON response
+ * GET request, binary (file) response
+ * PUT request, JSON request body, JSON response
+ * PUT request, binary (file) request body, JSON response
+ * POST request, JSON request body, JSON response
+ * POST request, multipart request body, JSON response
+ * HEAD request, JSON response expected
+ 
+## Two examples to show how easy it is:
+
+A normal get request, but with an OAuth 2 Bearer Token for authorization:
+```
+myToken = 'XXXXXXXX-XXXXXXXX-XXXXXXXX-XXXXXXXX';
+[statusCode, responseBody] = http.get('https://example.com', 'Authorization', ['Bearer ' myToken]);
+```
+
+A multipart POST request with a string part and a file part:
+```
+requestParts(1).Type = 'string';
+requestParts(1).Name = 'comment';
+requestParts(1).Body = 'http is not that complicated';
+requestParts(2).Type = 'file';
+requestParts(2).Name = 'upload';
+requestParts(2).Body = '/home/jrandom/example.mp3';
+[statusCode, responseBody] = http.multipartPost(https://example.com, requestParts);
+```
+
 # License
 
 HttpComponents is licensed under the [Apache 2 license](http://opensource.org/licenses/Apache-2.0). missing-http is a derivative work and is licensed under the same terms. Copyright for all code inside the `missing-http.jar` with a classpath of `net.psexton.ext.*` remains with its original owners (e.g. The Apache Foundation).
