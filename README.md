@@ -10,8 +10,8 @@ More recent versions of MATLAB have addressed some of the issues. You can now sp
 For instance, `weboptions` allows you to set headers. (Finally!) But while setting a Content Type is easy, if you want to set a header that's less common, you have to use a more cumbersome form, because Mathworks is concerned you might hurt youself with this scary internet business. Observe:
 ```
 data = webread(SOME_URL, weboptions('UserAgent', 'twatlab 2014b')); % works fine
-data = webread(SOME_URL, weboptions('Authentication', ['Bearer ' TOKEN]); % does not work
-data = webread(SOME_URL, weboptions('KeyName', 'Authentication', 'KeyValue', ['Bearer ' TOKEN]); % works
+data = webread(SOME_URL, weboptions('Authentication', 'SECRETS'); % does not work
+data = webread(SOME_URL, weboptions('KeyName', 'Authentication', 'KeyValue', 'SECRETS';); % works
 ```
 
 And that's just scratching the surface. (Still can't see the status codes! Those are useful!) As with most tasks that don't resemble linear algebra, MATLAB does a fairly piss poor job.
