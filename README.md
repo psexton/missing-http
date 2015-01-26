@@ -20,7 +20,7 @@ And that's just scratching the surface. (Still can't see the status codes! Those
 
 MATLAB supports Java, and Java has the *fantastic* [Apache HttpComponents](https://hc.apache.org/), so why not just add those jars to the dynamic classpath, grumble a bit, and continue on?
 
-Except MATLAB uses HttpComponents internally, so it's already on the classpath. But they use an old version (4.1, I believe), and their java classpath trumps yours. So your code will fail with strange errors about classes and methods not found.
+Except MATLAB uses HttpComponents internally, so it's already on the classpath. But they use an old version (4.1, I believe), and their Java classpath trumps yours. So your code will fail with strange errors about classes and methods not found.
 
 # A Working Solution
 
@@ -43,7 +43,7 @@ Provided wrappers:
  * PUT request, binary (file) request body, JSON response
  * POST request, JSON request body, JSON response
  * POST request, multipart request body, JSON response
- * HEAD request, JSON response expected
+ * HEAD request
  
 ## Two examples to show how easy it is:
 
