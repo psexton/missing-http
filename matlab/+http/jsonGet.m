@@ -5,22 +5,9 @@ function [ statusCode, responseBody ] = jsonGet( url, varargin )
 %   STATUSCODE Integer response code
 %   RESPONSEBODY Response body
 
-% Build the request
-request = net.psexton.ext.org.apache.http.client.methods.HttpGet(url);
-request.setHeader('Accept', 'application/json');
-if(nargin > 1)
-    http.private.addExtraHeaders(request, varargin);
-end
-
-% Execute the request
-[client, response] = http.private.executeRequest(request);
-
-% Parse the response
-statusCode = response.getStatusLine.getStatusCode;
-responseBody = net.psexton.ext.org.apache.http.util.EntityUtils.toString(response.getEntity);
-responseBody = char(responseBody); % convert from Java String to char array
-
-% Clean up
-http.private.cleanup(client, response);
+% The Java response is a String[]. We convert this to a cell array of chars
+response = cell(net.psexton.missinghttp.MatlabShim.jsonGet(url, varargin));
+statusCode = str2double(response{1});
+responseBody = response{2};
 
 end

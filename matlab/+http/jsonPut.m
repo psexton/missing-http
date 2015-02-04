@@ -6,26 +6,9 @@ function [ statusCode, responseBody ] = jsonPut( url, requestBody, varargin )
 %   STATUSCODE Integer response code
 %   RESPONSEBODY Response body
 
-% Build the request
-request = net.psexton.ext.org.apache.http.client.methods.HttpPut(url);
-request.setHeader('Content-Type', 'application/json');
-request.setHeader('Accept', 'application/json');
-if(nargin > 2)
-    http.private.addExtraHeaders(request, varargin);
-end
-requestEntity = net.psexton.ext.org.apache.http.entity.StringEntity(requestBody);
-request.setEntity(requestEntity);
-
-% Execute the request
-[client, response] = http.private.executeRequest(request);
-
-% Parse the response
-statusCode = response.getStatusLine.getStatusCode;
-responseBody = net.psexton.ext.org.apache.http.util.EntityUtils.toString(response.getEntity);
-responseBody = char(responseBody); % convert from Java String to char array
-
-% Clean up
-http.private.cleanup(client, response);
+% The Java response is a String[]. We convert this to a cell array of chars
+response = cell(net.psexton.missinghttp.MatlabShim.jsonPut(url, requestBody, varargin));
+statusCode = str2double(response{1});
+responseBody = response{2};
 
 end
-
