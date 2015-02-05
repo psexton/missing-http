@@ -5,13 +5,17 @@
 
 package net.psexton.missinghttp;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpHead;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.ContentType;
+import org.apache.http.entity.FileEntity;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
@@ -32,18 +36,61 @@ import org.apache.http.util.EntityUtils;
  * @author PSexton
  */
 public class MatlabShim {
-    private static final String JSON = "application/json";
-    private static final String BINARY = "application/octet-stream";
-    
     // Private constructor to prevent instantiation
     private MatlabShim() {};
     
     public static String fileGet(String url, String filePath, String... headers) throws IOException {
-        throw new UnsupportedOperationException("Not implemented yet");
+        try (CloseableHttpClient client = HttpClients.createDefault()) {
+            HttpGet request = new HttpGet(url);
+            // Set request headers
+            request.addHeader("Accept", ContentType.APPLICATION_OCTET_STREAM.toString());
+            for(int i = 0; i < headers.length; i+=2) {
+                request.setHeader(headers[i], headers[i+1]);
+            }
+            // Execute the request
+            try (CloseableHttpResponse response = client.execute(request)) {
+                // Parse the response.
+                // Get the respone status code first. If it's not 200, don't bother
+                // with the response body.
+                int statusCode = response.getStatusLine().getStatusCode();
+                if(statusCode == 200) {
+                    HttpEntity responseEntity = response.getEntity();
+                    FileOutputStream destStream = new FileOutputStream(new File(filePath));
+                    responseEntity.writeTo(destStream);
+                }
+                else {
+                    EntityUtils.consume(response.getEntity()); // Consume the response so we can reuse the connection
+                }
+                
+                // Package it up for MATLAB.
+                String returnVal = Integer.toString(statusCode);
+                return returnVal;
+            }
+        }
     }
     
-    public static String[] filePut(String url, String filePath, String... headers) {
-        throw new UnsupportedOperationException("Not implemented yet");
+    public static String[] filePut(String url, File source, String... headers) throws IOException {
+        try (CloseableHttpClient client = HttpClients.createDefault()) {
+            HttpPut request = new HttpPut(url);
+            // Set request body
+            FileEntity requestEntity = new FileEntity(source, ContentType.APPLICATION_OCTET_STREAM);
+            request.setEntity(requestEntity);
+            // Set request headers
+            request.setHeader("Accept", ContentType.APPLICATION_JSON.toString());
+            for(int i = 0; i < headers.length; i+=2) {
+                request.setHeader(headers[i], headers[i+1]);
+            }
+            // Execute the request
+            try (CloseableHttpResponse response = client.execute(request)) {
+                // Parse the response
+                int statusCode = response.getStatusLine().getStatusCode();
+                String responseBody = EntityUtils.toString(response.getEntity());
+                
+                // Package it up for MATLAB.
+                String[] returnVal = {Integer.toString(statusCode), responseBody};
+                return returnVal;
+            }
+        }
     }
     
     public static String head(String url, String... headers) throws IOException {
@@ -69,7 +116,7 @@ public class MatlabShim {
         try (CloseableHttpClient client = HttpClients.createDefault()) {
             HttpGet request = new HttpGet(url);
             // Set request headers
-            request.setHeader("Accept", JSON);
+            request.setHeader("Accept", ContentType.APPLICATION_JSON.toString());
             for(int i = 0; i < headers.length; i+=2) {
                 request.setHeader(headers[i], headers[i+1]);
             }
@@ -93,7 +140,7 @@ public class MatlabShim {
             StringEntity requestEntity = new StringEntity(requestBody, ContentType.APPLICATION_JSON);
             request.setEntity(requestEntity);
             // Set request headers
-            request.setHeader("Accept", JSON);
+            request.setHeader("Accept", ContentType.APPLICATION_JSON.toString());
             for(int i = 0; i < headers.length; i+=2) {
                 request.setHeader(headers[i], headers[i+1]);
             }
@@ -117,7 +164,7 @@ public class MatlabShim {
             StringEntity requestEntity = new StringEntity(requestBody, ContentType.APPLICATION_JSON);
             request.setEntity(requestEntity);
             // Set request headers
-            request.setHeader("Accept", JSON);
+            request.setHeader("Accept", ContentType.APPLICATION_JSON.toString());
             for(int i = 0; i < headers.length; i+=2) {
                 request.setHeader(headers[i], headers[i+1]);
             }
