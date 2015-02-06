@@ -32,39 +32,16 @@ if(isempty(requestParts))
     error('missinghttp:parse', 'requestParts cannot be empty');
 end
 
-% Build the request.
-% Thanks to the awesomeness of HttpComponents, this is not that much more
-% difficult than a single-part request
-request = net.psexton.ext.org.apache.http.client.methods.HttpPost(url);
-request.setHeader('Accept', 'application/json');
-if(nargin > 2)
-    http.private.addExtraHeaders(request, varargin);
-end
-entityBuilder = net.psexton.ext.org.apache.http.entity.mime.MultipartEntityBuilder.create();
+% Flatten each struct entry into a string, newline separated
+cellRequestParts = cell(1, numel(requestParts)); % preallocate for some reason
 for k=1:numel(requestParts)
-    part = requestParts(k);
-    if(strcmp(part.Type, 'string'))
-        stringPart = net.psexton.ext.org.apache.http.entity.mime.content.StringBody(part.Body, net.psexton.ext.org.apache.http.entity.ContentType.TEXT_PLAIN);
-        entityBuilder = entityBuilder.addPart(part.Name, stringPart);
-    elseif(strcmp(part.Type, 'file'))
-        filePart = net.psexton.ext.org.apache.http.entity.mime.content.FileBody(java.io.File(part.Body));
-        entityBuilder = entityBuilder.addPart(part.Name, filePart);
-    else
-       % @TODO ERROR 
-    end
+    str = sprintf('%s\n%s\n%s', requestParts(k).Type, requestParts(k).Name, requestParts(k).Body);
+    cellRequestParts{k} = str;
 end
-requestEntity = entityBuilder.build();
-request.setEntity(requestEntity);
 
-% Execute the request
-[client, response] = http.private.executeRequest(request);
-
-% Parse the response
-statusCode = response.getStatusLine.getStatusCode;
-responseBody = net.psexton.ext.org.apache.http.util.EntityUtils.toString(response.getEntity);
-responseBody = char(responseBody); % convert from Java String to char array
-
-% Clean up
-http.private.cleanup(client, response);
+% The Java response is a String[]. We convert this to a cell array of chars
+response = cell(net.psexton.missinghttp.MatlabShim.multipartPost(url, cellRequestParts, varargin));
+statusCode = str2double(response{1});
+responseBody = response{2};
 
 end

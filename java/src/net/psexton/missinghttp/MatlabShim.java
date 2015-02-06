@@ -17,6 +17,10 @@ import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.FileEntity;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.entity.mime.content.ContentBody;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
@@ -55,8 +59,9 @@ public class MatlabShim {
                 int statusCode = response.getStatusLine().getStatusCode();
                 if(statusCode == 200) {
                     HttpEntity responseEntity = response.getEntity();
-                    FileOutputStream destStream = new FileOutputStream(new File(filePath));
-                    responseEntity.writeTo(destStream);
+                    try (FileOutputStream destStream = new FileOutputStream(new File(filePath))) {
+                        responseEntity.writeTo(destStream);
+                    }
                 }
                 else {
                     EntityUtils.consume(response.getEntity()); // Consume the response so we can reuse the connection
@@ -187,8 +192,71 @@ public class MatlabShim {
      * @param requestParts Each request part is a string, with newlines separating the type, name, and body
      * @param headers
      * @return 
+     * @throws java.io.IOException 
      */
-    public static String[] multipartPost(String  url, String[] requestParts, String... headers) {
-        throw new UnsupportedOperationException("Not implemented yet");
+    public static String[] multipartPost(String  url, String[] requestParts, String... headers) throws IOException {
+        try (CloseableHttpClient client = HttpClients.createDefault()) {
+            HttpPost request = new HttpPost(url);
+            // Set request headers
+            request.setHeader("Accept", ContentType.APPLICATION_JSON.toString());
+            for(int i = 0; i < headers.length; i+=2) {
+                request.setHeader(headers[i], headers[i+1]);
+            }
+            // Set request body
+            // The most difficult part here is undoing the string mangling
+            // that #twatlab forced us to do.
+            // Actually doing a multi-part post isn't that much more difficult 
+            // than a single-part request. HttpComponents is awesome.
+            MultipartEntityBuilder builder = MultipartEntityBuilder.create();
+            for(String part : requestParts) {
+                String[] partParts = part.split("\n", 2); // If there are newlines in partBody, leave them alone
+                if(partParts.length != 3) {
+                    throw new IllegalArgumentException("RequestPart " + prettifyRequestPart(part) + " has " + partParts.length + " lines (expected 3).");
+                }
+                
+                String partType = partParts[0];
+                String partName = partParts[1];
+                String partBody = partParts[2];
+                
+                switch(partType) {
+                    case "file":
+                        FileBody fileBody = new FileBody(new File(partBody));
+                        builder.addPart(partName, fileBody);
+                        break;
+                    case "json":
+                        StringBody jsonBody = new StringBody(partBody, ContentType.APPLICATION_JSON);
+                        builder.addPart(partName, jsonBody);
+                        break;
+                    case "string":
+                        StringBody stringBody = new StringBody(partBody, ContentType.DEFAULT_TEXT);
+                        builder.addPart(partName, (ContentBody) stringBody);
+                        break;
+                    default:
+                        throw new IllegalArgumentException("RequestPart " + prettifyRequestPart(part) + " has an unsupported type (expected \"file\", \"json\", or \"string\").");
+                }
+            }
+            request.setEntity(builder.build());
+            // Execute the request
+            try (CloseableHttpResponse response = client.execute(request)) {
+                // Parse the response
+                int statusCode = response.getStatusLine().getStatusCode();
+                String responseBody = EntityUtils.toString(response.getEntity());
+                
+                // Package it up for MATLAB.
+                String[] returnVal = {Integer.toString(statusCode), responseBody};
+                return returnVal;
+            }   
+        }
+    }
+    
+    /**
+     * Utility for printing error messages from multipartPost
+     * @param part
+     * @return 
+     */
+    private static String prettifyRequestPart(String part) {
+        part = part.replace("\n", "\",\"");
+        part = "{\"" + part + "\"}";
+        return part;
     }
 }
