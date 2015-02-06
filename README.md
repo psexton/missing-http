@@ -72,6 +72,10 @@ requestParts(2).Body = '/home/jrandom/example.mp3';
 
 HttpComponents is licensed under the [Apache 2 license](http://opensource.org/licenses/Apache-2.0). missing-http is a derivative work and is licensed under the same terms. Copyright for all code inside the `missing-http.jar` with a classpath of `net.psexton.ext.*` remains with its original owners (e.g. The Apache Foundation).
 
+# Versioning
+
+[Semantic Versioning](http://semver.org/) is used for the release versions, and [Semanticly Versioned Names](http://semvername.org) are used for the tags and release files.
+
 # Contributing
 
 1. Fork it ( https://github.com/psexton/missing-http/fork )
