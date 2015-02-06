@@ -209,7 +209,7 @@ public class MatlabShim {
             // than a single-part request. HttpComponents is awesome.
             MultipartEntityBuilder builder = MultipartEntityBuilder.create();
             for(String part : requestParts) {
-                String[] partParts = part.split("\n", 2); // If there are newlines in partBody, leave them alone
+                String[] partParts = part.split("\n", 3); // If there are newlines in partBody, leave them alone
                 if(partParts.length != 3) {
                     throw new IllegalArgumentException("RequestPart " + prettifyRequestPart(part) + " has " + partParts.length + " lines (expected 3).");
                 }
