@@ -5,6 +5,8 @@ function [ statusCode, responseBody ] = jsonGet( url, varargin )
 %   STATUSCODE Integer response code
 %   RESPONSEBODY Response body
 
+% Java arguments will map from char arrays and cell arrays of chars to
+% String and String[]
 % The Java response is a String[]. We convert this to a cell array of chars
 response = cell(net.psexton.missinghttp.MatlabShim.jsonGet(url, varargin));
 statusCode = str2double(response{1});

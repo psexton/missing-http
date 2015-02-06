@@ -7,6 +7,8 @@ function statusCode = fileGet( url, filePath, varargin )
 %
 %   File is only written to if status code is 200
 
+% Java arguments will map from char arrays and cell arrays of chars to
+% String and String[]
 % The Java response is a String. We convert this to a char array
 response = char(net.psexton.missinghttp.MatlabShim.fileGet(url, filePath, varargin));
 statusCode = str2double(response);

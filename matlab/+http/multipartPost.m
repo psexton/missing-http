@@ -39,6 +39,8 @@ for k=1:numel(requestParts)
     cellRequestParts{k} = str;
 end
 
+% Java arguments will map from char arrays and cell arrays of chars to
+% String and String[]
 % The Java response is a String[]. We convert this to a cell array of chars
 response = cell(net.psexton.missinghttp.MatlabShim.multipartPost(url, cellRequestParts, varargin));
 statusCode = str2double(response{1});
