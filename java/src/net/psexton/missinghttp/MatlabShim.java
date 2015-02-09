@@ -48,8 +48,10 @@ public class MatlabShim {
             HttpGet request = new HttpGet(url);
             // Set request headers
             request.addHeader("Accept", ContentType.APPLICATION_OCTET_STREAM.toString());
-            for(int i = 0; i < headers.length; i+=2) {
-                request.setHeader(headers[i], headers[i+1]);
+            if(headers != null) {
+                for(int i = 0; i < headers.length; i+=2) {
+                    request.setHeader(headers[i], headers[i+1]);
+                }
             }
             // Execute the request
             try (CloseableHttpResponse response = client.execute(request)) {
@@ -82,8 +84,10 @@ public class MatlabShim {
             request.setEntity(requestEntity);
             // Set request headers
             request.setHeader("Accept", ContentType.APPLICATION_JSON.toString());
-            for(int i = 0; i < headers.length; i+=2) {
-                request.setHeader(headers[i], headers[i+1]);
+            if(headers != null) {
+                for(int i = 0; i < headers.length; i+=2) {
+                    request.setHeader(headers[i], headers[i+1]);
+                }
             }
             // Execute the request
             try (CloseableHttpResponse response = client.execute(request)) {
@@ -102,8 +106,10 @@ public class MatlabShim {
         try (CloseableHttpClient client = HttpClients.createDefault()) {
             HttpHead request = new HttpHead(url);
             // Set request headers
-            for(int i = 0; i < headers.length; i+=2) {
-                request.setHeader(headers[i], headers[i+1]);
+            if(headers != null) {
+                for(int i = 0; i < headers.length; i+=2) {
+                    request.setHeader(headers[i], headers[i+1]);
+                }
             }
             // Execute the request
             try (CloseableHttpResponse response = client.execute(request)) {
@@ -122,8 +128,10 @@ public class MatlabShim {
             HttpGet request = new HttpGet(url);
             // Set request headers
             request.setHeader("Accept", ContentType.APPLICATION_JSON.toString());
-            for(int i = 0; i < headers.length; i+=2) {
-                request.setHeader(headers[i], headers[i+1]);
+            if(headers != null) {
+                for(int i = 0; i < headers.length; i+=2) {
+                    request.setHeader(headers[i], headers[i+1]);
+                }
             }
             // Execute the request
             try (CloseableHttpResponse response = client.execute(request)) {
@@ -146,8 +154,10 @@ public class MatlabShim {
             request.setEntity(requestEntity);
             // Set request headers
             request.setHeader("Accept", ContentType.APPLICATION_JSON.toString());
-            for(int i = 0; i < headers.length; i+=2) {
-                request.setHeader(headers[i], headers[i+1]);
+            if(headers != null) {
+                for(int i = 0; i < headers.length; i+=2) {
+                    request.setHeader(headers[i], headers[i+1]);
+                }
             }
             // Execute the request
             try (CloseableHttpResponse response = client.execute(request)) {
@@ -170,8 +180,10 @@ public class MatlabShim {
             request.setEntity(requestEntity);
             // Set request headers
             request.setHeader("Accept", ContentType.APPLICATION_JSON.toString());
-            for(int i = 0; i < headers.length; i+=2) {
-                request.setHeader(headers[i], headers[i+1]);
+            if(headers != null) {
+                for(int i = 0; i < headers.length; i+=2) {
+                    request.setHeader(headers[i], headers[i+1]);
+                }
             }
             // Execute the request
             try (CloseableHttpResponse response = client.execute(request)) {
@@ -199,8 +211,10 @@ public class MatlabShim {
             HttpPost request = new HttpPost(url);
             // Set request headers
             request.setHeader("Accept", ContentType.APPLICATION_JSON.toString());
-            for(int i = 0; i < headers.length; i+=2) {
-                request.setHeader(headers[i], headers[i+1]);
+            if(headers != null) {
+                for(int i = 0; i < headers.length; i+=2) {
+                    request.setHeader(headers[i], headers[i+1]);
+                }
             }
             // Set request body
             // The most difficult part here is undoing the string mangling
