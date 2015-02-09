@@ -16,6 +16,6 @@ class Main {
     }
     
     public Main() {
-        System.out.println("missing-http, build with HttpComponents Client 4.3.3 GA");
+        System.out.println("missing-http, built with HttpComponents Client 4.3.3 GA");
     }
 }
