@@ -43,6 +43,15 @@ public class MatlabShim {
     // Private constructor to prevent instantiation
     private MatlabShim() {};
     
+    /**
+     * GET request, with file response
+     * @param url URL to make request to
+     * @param filePath Path to create/overwrite with downloaded file
+     * @param headers Extra headers to add. Even-numbered elements will be treated as header names, and odd-numbered elements will be treated as header values.
+     * @return Response status code.
+     * @throws IOException 
+     * "application/octet-stream" is the expected Content-Type of the response.
+     */
     public static String fileGet(String url, String filePath, String... headers) throws IOException {
         try (CloseableHttpClient client = HttpClients.createDefault()) {
             HttpGet request = new HttpGet(url);
@@ -76,6 +85,15 @@ public class MatlabShim {
         }
     }
     
+    /**
+     * PUT request, with file request and JSON response
+     * @param url URL to make request to
+     * @param source Path to read for uploaded file
+     * @param headers Extra headers to add. Even-numbered elements will be treated as header names, and odd-numbered elements will be treated as header values.
+     * @return String array of length 2. Element 0 is the response status code. Element 1 is the response body
+     * @throws IOException 
+     * "application/octet-stream" is the Content-Type of the request.
+     */
     public static String[] filePut(String url, File source, String... headers) throws IOException {
         try (CloseableHttpClient client = HttpClients.createDefault()) {
             HttpPut request = new HttpPut(url);
@@ -102,6 +120,13 @@ public class MatlabShim {
         }
     }
     
+    /**
+     * HEAD request
+     * @param url URL to make request to
+     * @param headers Extra headers to add. Even-numbered elements will be treated as header names, and odd-numbered elements will be treated as header values.
+     * @return Response status code.
+     * @throws IOException 
+     */
     public static String head(String url, String... headers) throws IOException {
         try (CloseableHttpClient client = HttpClients.createDefault()) {
             HttpHead request = new HttpHead(url);
@@ -123,6 +148,13 @@ public class MatlabShim {
         }
     }
     
+    /**
+     * GET request, with JSON response
+     * @param url URL to make request to
+     * @param headers Extra headers to add. Even-numbered elements will be treated as header names, and odd-numbered elements will be treated as header values.
+     * @return String array of length 2. Element 0 is the response status code. Element 1 is the response body
+     * @throws IOException 
+     */
     public static String[] jsonGet(String url, String... headers) throws IOException {
         try (CloseableHttpClient client = HttpClients.createDefault()) {
             HttpGet request = new HttpGet(url);
@@ -146,6 +178,14 @@ public class MatlabShim {
         }
     }
     
+    /**
+     * PUT request, with JSON request and response
+     * @param url URL to make request to
+     * @param requestBody JSON object, formatted as a string
+     * @param headers Extra headers to add. Even-numbered elements will be treated as header names, and odd-numbered elements will be treated as header values.
+     * @return String array of length 2. Element 0 is the response status code. Element 1 is the response body
+     * @throws IOException 
+     */
     public static String[] jsonPost(String url, String requestBody, String... headers) throws IOException {
         try (CloseableHttpClient client = HttpClients.createDefault()) {
             HttpPost request = new HttpPost(url);
@@ -172,6 +212,14 @@ public class MatlabShim {
         }
     }
     
+    /**
+     * PUT request, with JSON request and response
+     * @param url URL to make request to
+     * @param requestBody JSON object, formatted as a string
+     * @param headers Extra headers to add. Even-numbered elements will be treated as header names, and odd-numbered elements will be treated as header values.
+     * @return String array of length 2. Element 0 is the response status code. Element 1 is the response body
+     * @throws IOException 
+     */
     public static String[] jsonPut(String url, String requestBody, String... headers) throws IOException {
         try (CloseableHttpClient client = HttpClients.createDefault()) {
             HttpPut request = new HttpPut(url);
@@ -199,12 +247,16 @@ public class MatlabShim {
     }
     
     /**
-     * 
-     * @param url
+     * POST request, with multipart request and JSON response
+     * @param url URL to make request to
      * @param requestParts Each request part is a string, with newlines separating the type, name, and body
-     * @param headers
-     * @return 
+     * @param headers Extra headers to add. Even-numbered elements will be treated as header names, and odd-numbered elements will be treated as header values.
+     * @return String array of length 2. Element 0 is the response status code. Element 1 is the response body
      * @throws java.io.IOException 
+     * Each element in requestParts should contain three newline (\n) separated parts: 
+     * A type ("file", "json", or "string"), a name, and a body.
+     * The type specifies what Content-Type to use for that part. The name specifies what name to give to that part.
+     * The body is the body of that part. (For a file, this should be the file's path.)
      */
     public static String[] multipartPost(String  url, String[] requestParts, String... headers) throws IOException {
         try (CloseableHttpClient client = HttpClients.createDefault()) {
@@ -265,8 +317,8 @@ public class MatlabShim {
     
     /**
      * Utility for printing error messages from multipartPost
-     * @param part
-     * @return 
+     * @param part String with three \n separated parts
+     * @return String with three parts in quotes, inside curly braces
      */
     private static String prettifyRequestPart(String part) {
         part = part.replace("\n", "\",\"");
