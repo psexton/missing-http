@@ -1,4 +1,5 @@
-%ONLOAD Script for loading MissingHTTP.
+%ONLOAD Hook for loading Missing HTTP.
+
 function onLoad()
   packagePath = fileparts(mfilename('fullpath'));
   addpath(fullfile(packagePath, 'matlab'));
@@ -9,7 +10,7 @@ function onLoad()
     javaaddpath(jarPath);
   else
     warning('missinghttp:onLoad:missingJavaComponent', ...
-      ['MissingHTTP could not locate its Java component. Functionality will be ' ...
+      ['Missing HTTP could not locate its Java component. Functionality will be ' ...
        'limited to non-existent.']);
   end
 end

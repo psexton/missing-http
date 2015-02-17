@@ -1,4 +1,5 @@
-%ONUNLOAD Script for unloading MissingHTTP.
+%ONUNLOAD Hook for unloading Missing HTTP.
+
 function onUnload()
   packagePath = fileparts(mfilename('fullpath'));
   rmpath(fullfile(packagePath, 'matlab'));
