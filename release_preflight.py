@@ -31,6 +31,8 @@ os.remove('release_preflight.py')
 # Delete everything in java subdir except for dist/missing-http.jar
 shutil.rmtree('java/build')
 shutil.rmtree('java/lib')
+if os.path.exists('java/test'):
+    shutil.rmtree('java/test')
 if os.path.exists('java/coverage'):
     shutil.rmtree('java/coverage')
 shutil.rmtree('java/nbproject')
