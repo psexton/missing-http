@@ -38,14 +38,14 @@
 %
 % Examples:
 %   % Multipart post with one string part and one file part
-%	>> url = 'http://example.com/upload';
+%   >> url = 'http://example.com/upload';
 %   >> requestParts(1).Type = 'string';
 %   >> requestParts(1).Name = 'comment';
 %   >> requestParts(1).Body = 'http is not that complicated';
 %   >> requestParts(2).Type = 'file';
 %   >> requestParts(2).Name = 'upload';
 %   >> requestParts(2).Body = '/home/jrandom/example.mp3';
-%   [statusCode, responseBody = http.multipartPost(url, requestParts);
+%   [statusCode, responseBody] = http.multipartPost(url, requestParts);
 
 function [ statusCode, responseBody ] = multipartPost( url, requestParts, varargin )
 
