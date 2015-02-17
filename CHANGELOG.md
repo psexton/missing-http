@@ -9,7 +9,7 @@ Version numbers are assigned according to the Semantic Versioning Specification 
 
 ## 0.2.1 (2015-02-09):
 
- * Fix bug with no additional headers added.
+ * Fix bug in 0.2.0 where `NullPointerException` got thrown if no extra headers were specifed
 
 ## 0.2.0 (2015-02-06):
  
@@ -18,3 +18,4 @@ Version numbers are assigned according to the Semantic Versioning Specification 
 ## 0.1.0 (2015-01-26):
 
  * Initial release
+ * Bundles HttpClient 4.3.6 GA
