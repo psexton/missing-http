@@ -13,4 +13,12 @@ function onLoad()
       ['Missing HTTP could not locate its Java component. Functionality will be ' ...
        'limited to non-existent.']);
   end
+
+  % If a released version is being loaded, the directory containing release
+  % information should be added to MATLAB's path to make sure the toolbox
+  % properly shows up in the documentation and in the output of the ver command
+  releaseInformationPath = fullfile(packagePath, 'missing-http');
+  if exist(releaseInformationPath, 'dir') == 7
+    addpath(releaseInformationPath);
+  end
 end
