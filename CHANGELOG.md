@@ -2,6 +2,11 @@
 
 Version numbers are assigned according to the Semantic Versioning Specification <http://semver.org>.
 
+## 0.3.0 (2015-02-17):
+
+ * Add changelog [#2](https://github.com/psexton/missing-http/issues/2)
+ * Add entries in `ver` and `doc -classic` [#3](https://github.com/psexton/missing-http/issues/3)
+
 ## 0.2.1 (2015-02-09):
 
  * Fix bug with no additional headers added.
