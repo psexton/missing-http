@@ -30,7 +30,7 @@ That's exactly what missing-http-0.1.0 did. All occurances of `org.apache.*` wer
 
 ## But wait, there's more!
 
-Unfortunately, this creates problems if you're planning on putting both missing-http and something else on the dynamic java classpath. (See [#1](https://github.com/psexton/missing-http/issues/1).) So missing-http-0.2.0 shoves everything behind static Java methods. All Java objects still get cleared when you run `javaaddpath`, but at least MATLAB doesn't err out. #twatlab
+Unfortunately, this creates problems if you're planning on putting both missing-http and something else on the dynamic java classpath. (See [#1](https://github.com/psexton/missing-http/issues/1).) So newer versions shove everything behind static Java methods. All Java objects still get cleared when you run `javaaddpath`, but at least MATLAB doesn't err out. #twatlab
 
 # Installation
 
