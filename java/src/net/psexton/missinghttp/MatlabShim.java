@@ -111,7 +111,10 @@ public class MatlabShim {
             try (CloseableHttpResponse response = client.execute(request)) {
                 // Parse the response
                 int statusCode = response.getStatusLine().getStatusCode();
-                String responseBody = EntityUtils.toString(response.getEntity());
+                HttpEntity entity = response.getEntity();
+                String responseBody = "";
+                if (entity != null)
+                    EntityUtils.toString(entity);
                 
                 // Package it up for MATLAB.
                 String[] returnVal = {Integer.toString(statusCode), responseBody};
@@ -169,7 +172,10 @@ public class MatlabShim {
             try (CloseableHttpResponse response = client.execute(request)) {
                 // Parse the response
                 int statusCode = response.getStatusLine().getStatusCode();
-                String responseBody = EntityUtils.toString(response.getEntity());
+                HttpEntity entity = response.getEntity();
+                String responseBody = "";
+                if (entity != null)
+                    EntityUtils.toString(entity);
                 
                 // Package it up for MATLAB.
                 String[] returnVal = {Integer.toString(statusCode), responseBody};
@@ -203,7 +209,10 @@ public class MatlabShim {
             try (CloseableHttpResponse response = client.execute(request)) {
                 // Parse the response
                 int statusCode = response.getStatusLine().getStatusCode();
-                String responseBody = EntityUtils.toString(response.getEntity());
+                HttpEntity entity = response.getEntity();
+                String responseBody = "";
+                if (entity != null)
+                    EntityUtils.toString(entity);
                 
                 // Package it up for MATLAB.
                 String[] returnVal = {Integer.toString(statusCode), responseBody};
@@ -237,7 +246,10 @@ public class MatlabShim {
             try (CloseableHttpResponse response = client.execute(request)) {
                 // Parse the response
                 int statusCode = response.getStatusLine().getStatusCode();
-                String responseBody = EntityUtils.toString(response.getEntity());
+                HttpEntity entity = response.getEntity();
+                String responseBody = "";
+                if (entity != null)
+                    EntityUtils.toString(entity);
                 
                 // Package it up for MATLAB.
                 String[] returnVal = {Integer.toString(statusCode), responseBody};
@@ -306,7 +318,10 @@ public class MatlabShim {
             try (CloseableHttpResponse response = client.execute(request)) {
                 // Parse the response
                 int statusCode = response.getStatusLine().getStatusCode();
-                String responseBody = EntityUtils.toString(response.getEntity());
+                HttpEntity entity = response.getEntity();
+                String responseBody = "";
+                if (entity != null)
+                    EntityUtils.toString(entity);
                 
                 // Package it up for MATLAB.
                 String[] returnVal = {Integer.toString(statusCode), responseBody};
