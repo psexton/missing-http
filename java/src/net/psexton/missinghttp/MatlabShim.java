@@ -114,7 +114,7 @@ public class MatlabShim {
                 HttpEntity entity = response.getEntity();
                 String responseBody = "";
                 if (entity != null)
-                    EntityUtils.toString(entity);
+                    responseBody = EntityUtils.toString(entity);
                 
                 // Package it up for MATLAB.
                 String[] returnVal = {Integer.toString(statusCode), responseBody};
@@ -175,7 +175,7 @@ public class MatlabShim {
                 HttpEntity entity = response.getEntity();
                 String responseBody = "";
                 if (entity != null)
-                    EntityUtils.toString(entity);
+                    responseBody = EntityUtils.toString(entity);
                 
                 // Package it up for MATLAB.
                 String[] returnVal = {Integer.toString(statusCode), responseBody};
@@ -212,7 +212,7 @@ public class MatlabShim {
                 HttpEntity entity = response.getEntity();
                 String responseBody = "";
                 if (entity != null)
-                    EntityUtils.toString(entity);
+                    responseBody = EntityUtils.toString(entity);
                 
                 // Package it up for MATLAB.
                 String[] returnVal = {Integer.toString(statusCode), responseBody};
@@ -249,7 +249,7 @@ public class MatlabShim {
                 HttpEntity entity = response.getEntity();
                 String responseBody = "";
                 if (entity != null)
-                    EntityUtils.toString(entity);
+                    responseBody = EntityUtils.toString(entity);
                 
                 // Package it up for MATLAB.
                 String[] returnVal = {Integer.toString(statusCode), responseBody};
@@ -321,7 +321,7 @@ public class MatlabShim {
                 HttpEntity entity = response.getEntity();
                 String responseBody = "";
                 if (entity != null)
-                    EntityUtils.toString(entity);
+                    responseBody = EntityUtils.toString(entity);
                 
                 // Package it up for MATLAB.
                 String[] returnVal = {Integer.toString(statusCode), responseBody};
