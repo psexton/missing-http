@@ -1,6 +1,5 @@
 {
     "name": "missing-http",
-    "friendly_name": "Missing HTTP",
     "version": "1.0.0",
     "description": "Proper HTTP APIs for MATLAB",
     "keywords": [
