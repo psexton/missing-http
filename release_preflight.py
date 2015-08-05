@@ -1,10 +1,14 @@
+import io
+import json
 import os
 import shutil
 import subprocess
 import sys
 
-# Read in the version number from the command line argument
-versionNumber = sys.argv[1]
+# Read in the version number from the package.json file
+with io.open('package.json', 'r', encoding='utf-8') as data_file:
+    packageInfo = json.loads(data_file.read())
+versionNumber = packageInfo["version"]
 
 # Clean and build the java portion
 subprocess.check_call("ant -Dplatforms.JDK_1.7.home=/usr/lib/jvm/java-7-openjdk-amd64 -f java/build.xml clean jar", shell=True)
