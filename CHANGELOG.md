@@ -2,6 +2,9 @@
 
 Version numbers are assigned according to the Semantic Versioning Specification <http://semver.org>.
 
+## 1.0.0 (2015-08-12):
+ * Fix bug with null response bodies [#4](https://github.com/psexton/missing-http/issues/4)
+
 ## 0.3.0 (2015-02-17):
 
  * Add changelog [#2](https://github.com/psexton/missing-http/issues/2)
@@ -12,7 +15,7 @@ Version numbers are assigned according to the Semantic Versioning Specification 
  * Fix bug in 0.2.0 where `NullPointerException` got thrown if no extra headers were specifed
 
 ## 0.2.0 (2015-02-06):
- 
+
  * Fix problem with `javaaddpath` [#1](https://github.com/psexton/missing-http/issues/1)
 
 ## 0.1.0 (2015-01-26):
