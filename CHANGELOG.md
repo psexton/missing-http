@@ -3,6 +3,7 @@
 Version numbers are assigned according to the Semantic Versioning Specification <http://semver.org>.
 
 ## 1.0.0 (2015-08-12):
+
  * Fix bug with null response bodies [#4](https://github.com/psexton/missing-http/issues/4)
 
 ## 0.3.0 (2015-02-17):
@@ -12,7 +13,7 @@ Version numbers are assigned according to the Semantic Versioning Specification 
 
 ## 0.2.1 (2015-02-09):
 
- * Fix bug in 0.2.0 where `NullPointerException` got thrown if no extra headers were specifed
+ * Fix bug in 0.2.0 where `NullPointerException` got thrown if no extra headers were specified
 
 ## 0.2.0 (2015-02-06):
 
