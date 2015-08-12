@@ -48,6 +48,7 @@ Provided wrappers:
  * POST request, JSON request body, JSON response
  * POST request, multipart request body, JSON response
  * HEAD request
+
 ## Two examples to show how easy it is:
 
 A normal GET request, but with an OAuth 2 Bearer Token for authorization:
