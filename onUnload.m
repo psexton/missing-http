@@ -9,4 +9,11 @@ function onUnload()
   if any(strcmp(javaclasspath('-dynamic'), jarPath))
     javarmpath(jarPath);
   end
+  
+  % Remove the release information dir, if it exists
+  % (See more detailed note in onLoad.m)
+  releaseInformationPath = fullfile(packagePath, 'missing-http');
+  if exist(releaseInformationPath, 'dir') == 7
+    rmpath(releaseInformationPath);
+  end
 end
