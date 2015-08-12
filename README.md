@@ -48,13 +48,12 @@ Provided wrappers:
  * POST request, JSON request body, JSON response
  * POST request, multipart request body, JSON response
  * HEAD request
- 
 ## Two examples to show how easy it is:
 
-A normal get request, but with an OAuth 2 Bearer Token for authorization:
+A normal GET request, but with an OAuth 2 Bearer Token for authorization:
 ```
 myToken = 'XXXXXXXX-XXXXXXXX-XXXXXXXX-XXXXXXXX';
-[statusCode, responseBody] = http.get('https://example.com', 'Authorization', ['Bearer ' myToken]);
+[statusCode, responseBody] = http.jsonGet('https://example.com', 'Authorization', ['Bearer ' myToken]);
 ```
 
 A multipart POST request with a string part and a file part:
@@ -82,4 +81,4 @@ HttpComponents is licensed under the [Apache 2 license](http://opensource.org/li
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
-5. Create a new Pull Request 
+5. Create a new Pull Request
