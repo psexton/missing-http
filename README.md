@@ -5,9 +5,9 @@ Proper HTTP APIs for MATLAB.
 
 MATLAB's support for HTTP calls leaves a lot to be desired. `urlread` and `urlwrite` had numerous shortcomings. You couldn't set arbitrary headers. You couldn't see response headers. _You couldn't even see the response code._
 
-More recent versions of MATLAB have addressed some of the issues. You can now specify a timeout, for instance. And 2014b's `webread` and `webwrite` are big improvements. But in typical Mathworks style, they managed to still F it up.
+More recent versions of MATLAB have addressed some of the issues. You can now specify a timeout, for instance. And 2014b's `webread` and `webwrite` are big improvements. But in typical MathWorks style, they managed to still F it up.
 
-For instance, `weboptions` allows you to set headers. (Finally!) But while setting a Content Type is easy, if you want to set a header that's less common, you have to use a more cumbersome form, because Mathworks is concerned you might hurt youself with this scary internet business. Observe:
+For instance, `weboptions` allows you to set headers. (Finally!) But while setting a Content Type is easy, if you want to set a header that's less common, you have to use a more cumbersome form, because MathWorks is concerned you might hurt youself with this scary internet business. Observe:
 ```
 data = webread(SOME_URL, weboptions('UserAgent', 'MyApp/1.0')); % works fine
 data = webread(SOME_URL, weboptions('Authentication', 'SECRETS'); % does not work
