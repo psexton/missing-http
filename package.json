@@ -9,6 +9,10 @@
         {
             "name": "Paul Sexton",
             "email": "psexton@gnresound.com"
+        },
+        {
+            "name": "Nikola Radosavljevic",
+            "web": "http://nikolar.com"
         }
     ],
     "bugs": {
