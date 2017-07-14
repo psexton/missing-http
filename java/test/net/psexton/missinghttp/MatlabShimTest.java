@@ -6,6 +6,7 @@ package net.psexton.missinghttp;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.GeneralSecurityException;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Ignore;
@@ -21,10 +22,11 @@ public class MatlabShimTest {
     /**
      * Test of fileGet method, of class MatlabShimTest.
      * @throws java.io.IOException
+     * @throws java.security.GeneralSecurityException
      */
     @Ignore
     @Test
-    public void fileGet() throws IOException {
+    public void fileGet() throws IOException, GeneralSecurityException {
         System.out.println("fileGet");
         String url = "";
         String filePath = "";
@@ -39,10 +41,11 @@ public class MatlabShimTest {
     /**
      * Test of filePut method, of class MatlabShimTest.
      * @throws java.io.IOException
+     * @throws java.security.GeneralSecurityException
      */
     @Ignore
     @Test
-    public void filePut() throws IOException {
+    public void filePut() throws IOException, GeneralSecurityException {
         System.out.println("filePut");
         String url = "";
         File source = null;
@@ -57,18 +60,19 @@ public class MatlabShimTest {
     /**
      * Test of head method, of class MatlabShimTest.
      * @throws java.io.IOException
+     * @throws java.security.GeneralSecurityException
      */
     @Test
-    public void head() throws IOException {
+    public void head() throws IOException, GeneralSecurityException {
         String result = MatlabShim.head(BASE_URL);
     }
     @Test
-    public void headWithNull() throws IOException {
+    public void headWithNull() throws IOException, GeneralSecurityException {
         String[] headers = null;
         String result = MatlabShim.head(BASE_URL, headers);
     }
     @Test
-    public void headWithHeaders() throws IOException {
+    public void headWithHeaders() throws IOException, GeneralSecurityException {
         String[] headers = {"X-Foo", "Bar"};
         String result = MatlabShim.head(BASE_URL, headers);
     }
@@ -76,18 +80,19 @@ public class MatlabShimTest {
     /**
      * Test of jsonGet method, of class MatlabShimTest.
      * @throws java.io.IOException
+     * @throws java.security.GeneralSecurityException
      */
     @Test
-    public void jsonGet() throws IOException {
+    public void jsonGet() throws IOException, GeneralSecurityException {
         String[] result = MatlabShim.jsonGet(BASE_URL);
     }
     @Test
-    public void jsonGetWithNull() throws IOException {
+    public void jsonGetWithNull() throws IOException, GeneralSecurityException {
         String[] headers = null;
         String[] result = MatlabShim.jsonGet(BASE_URL, headers);
     }
     @Test
-    public void jsonGetWithHeaders() throws IOException {
+    public void jsonGetWithHeaders() throws IOException, GeneralSecurityException {
         String[] headers = {"X-Foo", "Bar"};
         String[] result = MatlabShim.jsonGet(BASE_URL, headers);
     }
@@ -95,10 +100,11 @@ public class MatlabShimTest {
     /**
      * Test of jsonPost method, of class MatlabShimTest.
      * @throws java.io.IOException
+     * @throws java.security.GeneralSecurityException
      */
     @Ignore
     @Test
-    public void jsonPost() throws IOException {
+    public void jsonPost() throws IOException, GeneralSecurityException {
         System.out.println("jsonPost");
         String url = "";
         String requestBody = "";
@@ -113,10 +119,11 @@ public class MatlabShimTest {
     /**
      * Test of jsonPut method, of class MatlabShimTest.
      * @throws java.io.IOException
+     * @throws java.security.GeneralSecurityException
      */
     @Ignore
     @Test
-    public void jsonPut() throws IOException {
+    public void jsonPut() throws IOException, GeneralSecurityException {
         System.out.println("jsonPut");
         String url = "";
         String requestBody = "";
@@ -131,10 +138,11 @@ public class MatlabShimTest {
     /**
      * Test of multipartPost method, of class MatlabShimTest.
      * @throws java.io.IOException
+     * @throws java.security.GeneralSecurityException
      */
     @Ignore
     @Test
-    public void multipartPost() throws IOException {
+    public void multipartPost() throws IOException, GeneralSecurityException {
         System.out.println("multipartPost");
         String url = "";
         String[] requestParts = null;
@@ -146,4 +154,9 @@ public class MatlabShimTest {
         fail("The test case is a prototype.");
     }
     
+    @Test
+    public void supportsLetsEncrypt() throws IOException, GeneralSecurityException {
+        String url = "https://helloworld.letsencrypt.org";
+        String result = MatlabShim.head(url);
+    }
 }

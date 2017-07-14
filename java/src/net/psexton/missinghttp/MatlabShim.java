@@ -5,15 +5,27 @@
 
 package net.psexton.missinghttp;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.security.GeneralSecurityException;
+import java.security.KeyStore;
+import java.security.cert.Certificate;
+import java.security.cert.CertificateFactory;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManagerFactory;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpHead;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.FileEntity;
 import org.apache.http.entity.StringEntity;
@@ -49,11 +61,12 @@ public class MatlabShim {
      * @param filePath Path to create/overwrite with downloaded file
      * @param headers Extra headers to add. Even-numbered elements will be treated as header names, and odd-numbered elements will be treated as header values.
      * @return Response status code.
-     * @throws IOException 
+     * @throws java.io.IOException
+     * @throws java.security.GeneralSecurityException
      * "application/octet-stream" is the expected Content-Type of the response.
      */
-    public static String fileGet(String url, String filePath, String... headers) throws IOException {
-        try (CloseableHttpClient client = HttpClients.createDefault()) {
+    public static String fileGet(String url, String filePath, String... headers) throws IOException, GeneralSecurityException {
+        try (CloseableHttpClient client = getClient()) {
             HttpGet request = new HttpGet(url);
             // Set request headers
             request.addHeader("Accept", ContentType.APPLICATION_OCTET_STREAM.toString());
@@ -91,11 +104,12 @@ public class MatlabShim {
      * @param source Path to read for uploaded file
      * @param headers Extra headers to add. Even-numbered elements will be treated as header names, and odd-numbered elements will be treated as header values.
      * @return String array of length 2. Element 0 is the response status code. Element 1 is the response body
-     * @throws IOException 
+     * @throws java.io.IOException
+     * @throws java.security.GeneralSecurityException
      * "application/octet-stream" is the Content-Type of the request.
      */
-    public static String[] filePut(String url, File source, String... headers) throws IOException {
-        try (CloseableHttpClient client = HttpClients.createDefault()) {
+    public static String[] filePut(String url, File source, String... headers) throws IOException, GeneralSecurityException {
+        try (CloseableHttpClient client = getClient()) {
             HttpPut request = new HttpPut(url);
             // Set request body
             FileEntity requestEntity = new FileEntity(source, ContentType.APPLICATION_OCTET_STREAM);
@@ -128,10 +142,11 @@ public class MatlabShim {
      * @param url URL to make request to
      * @param headers Extra headers to add. Even-numbered elements will be treated as header names, and odd-numbered elements will be treated as header values.
      * @return Response status code.
-     * @throws IOException 
+     * @throws java.io.IOException
+     * @throws java.security.GeneralSecurityException
      */
-    public static String head(String url, String... headers) throws IOException {
-        try (CloseableHttpClient client = HttpClients.createDefault()) {
+    public static String head(String url, String... headers) throws IOException, GeneralSecurityException {
+        try (CloseableHttpClient client = getClient()) {
             HttpHead request = new HttpHead(url);
             // Set request headers
             if(headers != null) {
@@ -156,10 +171,11 @@ public class MatlabShim {
      * @param url URL to make request to
      * @param headers Extra headers to add. Even-numbered elements will be treated as header names, and odd-numbered elements will be treated as header values.
      * @return String array of length 2. Element 0 is the response status code. Element 1 is the response body
-     * @throws IOException 
+     * @throws java.io.IOException
+     * @throws java.security.GeneralSecurityException
      */
-    public static String[] jsonGet(String url, String... headers) throws IOException {
-        try (CloseableHttpClient client = HttpClients.createDefault()) {
+    public static String[] jsonGet(String url, String... headers) throws IOException, GeneralSecurityException {
+        try (CloseableHttpClient client = getClient()) {
             HttpGet request = new HttpGet(url);
             // Set request headers
             request.setHeader("Accept", ContentType.APPLICATION_JSON.toString());
@@ -190,10 +206,11 @@ public class MatlabShim {
      * @param requestBody JSON object, formatted as a string
      * @param headers Extra headers to add. Even-numbered elements will be treated as header names, and odd-numbered elements will be treated as header values.
      * @return String array of length 2. Element 0 is the response status code. Element 1 is the response body
-     * @throws IOException 
+     * @throws java.io.IOException
+     * @throws java.security.GeneralSecurityException
      */
-    public static String[] jsonPost(String url, String requestBody, String... headers) throws IOException {
-        try (CloseableHttpClient client = HttpClients.createDefault()) {
+    public static String[] jsonPost(String url, String requestBody, String... headers) throws IOException, GeneralSecurityException {
+        try (CloseableHttpClient client = getClient()) {
             HttpPost request = new HttpPost(url);
             // Set request body
             StringEntity requestEntity = new StringEntity(requestBody, ContentType.APPLICATION_JSON);
@@ -227,10 +244,11 @@ public class MatlabShim {
      * @param requestBody JSON object, formatted as a string
      * @param headers Extra headers to add. Even-numbered elements will be treated as header names, and odd-numbered elements will be treated as header values.
      * @return String array of length 2. Element 0 is the response status code. Element 1 is the response body
-     * @throws IOException 
+     * @throws java.io.IOException
+     * @throws java.security.GeneralSecurityException
      */
-    public static String[] jsonPut(String url, String requestBody, String... headers) throws IOException {
-        try (CloseableHttpClient client = HttpClients.createDefault()) {
+    public static String[] jsonPut(String url, String requestBody, String... headers) throws IOException, GeneralSecurityException {
+        try (CloseableHttpClient client = getClient()) {
             HttpPut request = new HttpPut(url);
             // Set request body
             StringEntity requestEntity = new StringEntity(requestBody, ContentType.APPLICATION_JSON);
@@ -264,14 +282,15 @@ public class MatlabShim {
      * @param requestParts Each request part is a string, with newlines separating the type, name, and body
      * @param headers Extra headers to add. Even-numbered elements will be treated as header names, and odd-numbered elements will be treated as header values.
      * @return String array of length 2. Element 0 is the response status code. Element 1 is the response body
-     * @throws java.io.IOException 
+     * @throws java.io.IOException
+     * @throws java.security.GeneralSecurityException
      * Each element in requestParts should contain three newline (\n) separated parts: 
      * A type ("file", "json", or "string"), a name, and a body.
      * The type specifies what Content-Type to use for that part. The name specifies what name to give to that part.
      * The body is the body of that part. (For a file, this should be the file's path.)
      */
-    public static String[] multipartPost(String  url, String[] requestParts, String... headers) throws IOException {
-        try (CloseableHttpClient client = HttpClients.createDefault()) {
+    public static String[] multipartPost(String  url, String[] requestParts, String... headers) throws IOException, GeneralSecurityException {
+        try (CloseableHttpClient client = getClient()) {
             HttpPost request = new HttpPost(url);
             // Set request headers
             request.setHeader("Accept", ContentType.APPLICATION_JSON.toString());
@@ -339,5 +358,34 @@ public class MatlabShim {
         part = part.replace("\n", "\",\"");
         part = "{\"" + part + "\"}";
         return part;
+    }
+    
+    private static CloseableHttpClient getClient() throws GeneralSecurityException, IOException {
+        CloseableHttpClient httpClient = HttpClients.custom().setSSLSocketFactory(getSslSocketFactory()).build();
+        return httpClient;
+    }
+    
+    private static SSLConnectionSocketFactory getSslSocketFactory() throws GeneralSecurityException, IOException {
+        String LE_CERT_NAME = "lets-encrypt-x3-cross-signed";
+        String LE_CERT_RESOURCE_PATH = "/net/psexton/missinghttp/" + LE_CERT_NAME + ".der";
+        
+        KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
+        Path ksPath = Paths.get(System.getProperty("java.home"), "lib", "security", "cacerts");
+        try (InputStream ksPathStream = Files.newInputStream(ksPath)) {
+            keyStore.load(ksPathStream, null); // better no password than a hardcoded one
+
+            CertificateFactory cf = CertificateFactory.getInstance("X.509");
+            try (InputStream caInput = new BufferedInputStream(MatlabShim.class.getResourceAsStream(LE_CERT_RESOURCE_PATH))) {
+                Certificate crt = cf.generateCertificate(caInput);
+                keyStore.setCertificateEntry(LE_CERT_NAME, crt);
+            }
+
+            TrustManagerFactory tmf = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+            tmf.init(keyStore);
+            SSLContext sslContext = SSLContext.getInstance("TLS");
+            sslContext.init(null, tmf.getTrustManagers(), null);
+
+            return new SSLConnectionSocketFactory(sslContext);
+        }
     }
 }
