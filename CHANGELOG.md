@@ -2,6 +2,10 @@
 
 Version numbers are assigned according to the Semantic Versioning Specification <http://semver.org>.
 
+## 1.0.1 (2017-07-14):
+
+ * Support certificates issued by [Let's Encrypt](https://letsencrypt.org) [#9](https://github.com/psexton/missing-http/issues/9)
+
 ## 1.0.0 (2015-08-12):
 
  * Fix bug with null response bodies [#4](https://github.com/psexton/missing-http/issues/4)
